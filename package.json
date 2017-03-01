@@ -1,0 +1,41 @@
+{
+    "name": "weather_forecast",
+    "description": "Weather forecast for Belarus cities. Uses Yahoo Weather API",
+    "version": "0.0.1",
+    "homepage": "https://github.com/paratagas/weather_forecast",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/paratagas/weather_forecast.git"
+    },
+    "author": {
+        "name": "Yauheni Svirydzenka",
+        "email": "partagas@mail.ru",
+        "url": "https://github.com/paratagas"
+    },
+    "tags": [
+        "node.js",
+        "webix",
+        "Yahoo weather",
+        "Google maps",
+        "Highcharts",
+        "weather forecast"
+    ],
+    "main": "node server.js",
+    "scripts": {
+        "nodemon": "nodemon server.js"
+    },
+    "dependencies": {
+        "body-parser": "^1.16.0",
+        "express": "^4.14.0",
+        "cors": "^2.8.1",
+        "requestify": "^0.2.4"
+    },
+    "devDependencies": {
+        "gulp": "^3.9.0",
+        "gulp-concat": "^2.6.0",
+        "gulp-uglify": "^1.2.0",
+        "gulp-sourcemaps": "^1.5.2",
+        "nodemon": "^1.11.0"
+    },
+    "license": "GPL-3.0"
+}

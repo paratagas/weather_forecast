@@ -1,0 +1,26 @@
+.underMenu {
+	background-color: #C6E2FF;
+}
+
+.alert {
+   margin-bottom: 1px;
+   margin-top: 1px;
+}
+
+hr {
+   margin-bottom: 5px;
+   margin-top: 5px;
+}
+
+.my_menu .webix_view{
+	background-color: #ECEFF1;
+}
+
+.my_menu{
+	background-color: #ECEFF1;
+}
+
+.my_menu .webix_list_item{
+	line-height: 35px;
+	border-bottom-color: #ddd;
+}
