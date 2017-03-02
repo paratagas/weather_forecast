@@ -206,36 +206,36 @@ function setDataForGoogleMap(weatherData) {
 }
 
 /**
- * Choose arrow for rendering wind direction
+ * Choose arrow class for rendering wind direction
  *
  * @param {object} weatherData Whole data from server
- * @return {number} directionArrowCharCode Char code
+ * @return {string} arrowClass Class name for arrow image
  */
-function getWindDirection(weatherData) {
-    var directionArrowCharCode = 0;
+function getClassForWindDirection(weatherData) {
+    var arrowClass = "";
     var degrees = weatherData.wind.direction * 1;
+
     if (degrees <= 23 && degrees > 338) {
-        directionArrowCharCode = 11014;
+        arrowClass = "north";
     } else if (degrees > 23 && degrees <= 68) {
-        directionArrowCharCode = 11016;
+        arrowClass = "north-east";
     } else if (degrees > 68 && degrees <= 113) {
-        directionArrowCharCode = 11157;
+        arrowClass = "east";
     } else if (degrees > 113 && degrees <= 158) {
-        directionArrowCharCode = 11018;
+        arrowClass = "south-east";
     } else if (degrees > 158 && degrees <= 203) {
-        directionArrowCharCode = 11015;
+        arrowClass = "south";
     } else if (degrees > 203 && degrees <= 248) {
-        directionArrowCharCode = 11019;
+        arrowClass = "south-west";
     } else if (degrees > 248 && degrees <= 293) {
-        directionArrowCharCode = 11013;
+        arrowClass = "west";
     } else if (degrees > 293 && degrees <= 338) {
-        directionArrowCharCode = 11017;
+        arrowClass = "north-west";
     } else {
-        directionArrowCharCode = 11014;
+        arrowClass = "north";
     }
 
-    return directionArrowCharCode;
-
+    return arrowClass;
 }
 
 /**
@@ -244,11 +244,7 @@ function getWindDirection(weatherData) {
  * @param {object} weatherData Whole data from server
  * @param {string} cityName City name
  */
-function setDataToPageComponents(weatherData, cityName) {       
-    var windDirection = getWindDirection(weatherData);
-    var windArrow = String.fromCharCode(windDirection);
-    var windDirectionTemplate = "<div class=\"alert alert-warning\">Wind direction: <b>" + windArrow + "</div>";
-    var divider = "<hr>";
+function setDataToPageComponents(weatherData, cityName) {
     var placeCountry = "<div class=\"alert alert-info\">Country: <b>" + weatherData.location.country + "</b></div>";
     var placeRegion = "<div class=\"alert alert-info\">Region: <b>" + weatherData.location.region + "</b></div>";
     var placeCity = "<div class=\"alert alert-info\">City: <b>" + weatherData.location.city + "</b></div>";
@@ -263,11 +259,14 @@ function setDataToPageComponents(weatherData, cityName) {
     $$("geoInfo").define("template", wholeGeoInfo);
     $$("geoInfo").refresh();
     
-    var windSpeedMS = (weatherData.wind.speed * 1000 / 3600).toFixed(1);
     var visibility = "<div class=\"alert alert-warning\">Visibility: <b>" + weatherData.atmosphere.visibility + " km</b></div>";
     var humidity = "<div class=\"alert alert-warning\">Humidity: <b>" + weatherData.atmosphere.humidity + " %</b></div>";
-    var windSpeed = "<div class=\"alert alert-warning\">Wind speed: <b>" + windSpeedMS + " m/s</b></div>";
-    var wholeMeteoInfo = visibility + humidity + windSpeed;
+    var windSpeedMS = (weatherData.wind.speed * 1000 / 3600).toFixed(1);
+    var windDirectionClass = getClassForWindDirection(weatherData);
+    var windDirectionImageName = "arrow";
+    var windDirectionImageTemplate = '<img src="images/' + windDirectionImageName + '.png" class="' + windDirectionClass + '"/>';
+    var wind = "<div class=\"alert alert-warning\">Wind: <b>" + windSpeedMS + " m/s</b>   " + windDirectionImageTemplate + "</div>";
+    var wholeMeteoInfo = visibility + humidity + wind;
     $$("meteoInfo").define("template", wholeMeteoInfo);
     $$("meteoInfo").refresh();
 
@@ -275,11 +274,11 @@ function setDataToPageComponents(weatherData, cityName) {
     $$("cityPhoto").define("template", cityPhotoTemplate);
     $$("cityPhoto").refresh();
 
-    var labelLatTemplate = "<span class=\"label label-warning\">Latitude: " + weatherData.item.lat + "</span>";
+    var labelLatTemplate = "<span class=\"label label-info\">Latitude: " + weatherData.item.lat + "</span>";
     $$("labelLat").define("label", labelLatTemplate);
     $$("labelLat").refresh();
 
-    var labelLongTemplate = "<span class=\"label label-warning\">Longitude: " + weatherData.item.long + "</span>";
+    var labelLongTemplate = "<span class=\"label label-info\">Longitude: " + weatherData.item.long + "</span>";
     $$("labelLong").define("label", labelLongTemplate);
     $$("labelLong").refresh();
     
@@ -460,13 +459,14 @@ webix.ready(function(){
 	                {
 	                	rows:[
 	                		{
-	                			minHeight: 300,
+	                			gravity: 3,
+	                			minHeight: 250,
 	                			cols:[
 			    					{
 			                			view: "layout",
 			                			id: "infoContainer",
-			                			minWidth: 500,
-			                			gravity: 1,
+			                			minWidth: 300,
+			                			gravity: 3,
 			                			rows:[
 			                				{
 					                			view: "layout",
@@ -476,7 +476,7 @@ webix.ready(function(){
 							                		{
 					                					id: "meteoInfo",
 					                					gravity: 1,
-					                					template: "<div class=\"alert alert-warning\">Visibility: </div><div class=\"alert alert-warning\">Humidity: </div><div class=\"alert alert-warning\">Wind speed: </div>",
+					                					template: "<div class=\"alert alert-warning\">Visibility: </div><div class=\"alert alert-warning\">Humidity: </div><div class=\"alert alert-warning\">Wind: </div>",
 					                					css:"underMenu",
 					                					borderless: true
 					                				},
@@ -519,9 +519,8 @@ webix.ready(function(){
 										key: "AIzaSyAi0oVNVO-e603aUY8SILdD4v9bVBkmiTg",
 							    		view: "google-map",
 							    		id: "googleMap",
-							    		gravity: 1,
-							    		minWidth: 500,
-	                					maxWidth: 600,
+							    		gravity: 2,
+							    		minWidth: 200,
 										zoom: 7,
 										center: [53.9, 27.5667]
 			                		}
@@ -529,19 +528,15 @@ webix.ready(function(){
 	                		},
 	                		{view:"resizer"},
 	                		{
+	                			gravity: 2,
 	                			view: "layout",
 	                			id: "chartForecastContainer",
-	                			height: 320,
-	                			minHeight: 300,
-	                			maxHeight: 320,
+	                			minHeight: 150,
 			    				cols:[
 			                		{
 			                			id: "chartForecast",
 			                			template: "",
-			                			css:"underMenu",
-			                			height: 320,
-			                			minHeight: 300,
-			                			maxHeight: 320,
+			                			css:"underMenu"
 			                		}
 			    				]
 	                		}

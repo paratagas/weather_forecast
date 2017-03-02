@@ -83,13 +83,14 @@ webix.ready(function(){
 	                {
 	                	rows:[
 	                		{
-	                			minHeight: 300,
+	                			gravity: 3,
+	                			minHeight: 250,
 	                			cols:[
 			    					{
 			                			view: "layout",
 			                			id: "infoContainer",
-			                			minWidth: 500,
-			                			gravity: 1,
+			                			minWidth: 300,
+			                			gravity: 3,
 			                			rows:[
 			                				{
 					                			view: "layout",
@@ -99,7 +100,7 @@ webix.ready(function(){
 							                		{
 					                					id: "meteoInfo",
 					                					gravity: 1,
-					                					template: "<div class=\"alert alert-warning\">Visibility: </div><div class=\"alert alert-warning\">Humidity: </div><div class=\"alert alert-warning\">Wind speed: </div>",
+					                					template: "<div class=\"alert alert-warning\">Visibility: </div><div class=\"alert alert-warning\">Humidity: </div><div class=\"alert alert-warning\">Wind: </div>",
 					                					css:"underMenu",
 					                					borderless: true
 					                				},
@@ -142,9 +143,8 @@ webix.ready(function(){
 										key: "AIzaSyAi0oVNVO-e603aUY8SILdD4v9bVBkmiTg",
 							    		view: "google-map",
 							    		id: "googleMap",
-							    		gravity: 1,
-							    		minWidth: 500,
-	                					maxWidth: 600,
+							    		gravity: 2,
+							    		minWidth: 200,
 										zoom: 7,
 										center: [53.9, 27.5667]
 			                		}
@@ -152,19 +152,15 @@ webix.ready(function(){
 	                		},
 	                		{view:"resizer"},
 	                		{
+	                			gravity: 2,
 	                			view: "layout",
 	                			id: "chartForecastContainer",
-	                			height: 320,
-	                			minHeight: 300,
-	                			maxHeight: 320,
+	                			minHeight: 150,
 			    				cols:[
 			                		{
 			                			id: "chartForecast",
 			                			template: "",
-			                			css:"underMenu",
-			                			height: 320,
-			                			minHeight: 300,
-			                			maxHeight: 320,
+			                			css:"underMenu"
 			                		}
 			    				]
 	                		}

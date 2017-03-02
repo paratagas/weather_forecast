@@ -2,7 +2,7 @@
 
 ### Weather forecast service for Belarus cities created using Node.js and Webix
 
-![Weather forecast](http://i.imgur.com/PoSMHzj.png)
+![Weather forecast](http://i.imgur.com/SoBltSK.png)
 
 ---
 
