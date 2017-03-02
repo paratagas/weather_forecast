@@ -471,7 +471,7 @@ webix.ready(function(){
 			                				{
 					                			view: "layout",
 					                			id: "meteoInfoContainer",
-					                			gravity: 2,
+					                			gravity: 1,
 					                			cols:[
 							                		{
 					                					id: "meteoInfo",
@@ -492,7 +492,7 @@ webix.ready(function(){
 					                		{
 					                			view: "layout",
 					                			id: "cityInfoContainer",
-					                			gravity: 3,
+					                			gravity: 2,
 					                			cols:[
 					                				{
 							                			id: "placeInfo",
